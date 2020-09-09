@@ -163,8 +163,6 @@
 
 	</module>
 
-
-
 	<module name="strategy">
 		<param name="maxAgentPlanMemorySize" value="5" /> <!-- 0 means unlimited -->
 
