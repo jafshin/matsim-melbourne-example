@@ -1,10 +1,8 @@
-library(foreign)
 library(dplyr)
 library(sf)
 library(XML)
 library(readr)
 
-source("./functions/changeVISTACoordinateSystem.R")
 source("./functions/generateVISTAActsAndLeg.R")
 source("./functions/generatePopulationXML.R")
 
@@ -24,7 +22,7 @@ printProgress<-function(row, total_row, char)  {
 only_cyclists <- F
 
 # REading inputs
-trips <- read_csv("/jafshin/cloudstor/Data/VISTA/T_VISTA12_16_SA1_V1.csv") 
+trips <- read_csv("./data/vista/T_VISTA12_16_SA1_V1.csv") 
 # Filtering out outside Victoria stops and simplifying the place and mode tags
 trips <- trips %>% 
   mutate(ORIGPLACE1_2 = if_else(is.na(ORIGPLACE1), true = "other", 
@@ -48,8 +46,7 @@ trips <- trips %>%
 
 
 # Reading VISTA persons + filtering those living in Melbourne Metro
-persons <- read_csv("/jafshin/cloudstor/Data/VISTA/P_VISTA12_16_SA1_V1.csv")%>% 
-# I am loosing those with more than 10 levels, e.g. ANZSCOs
+persons <- read_csv("./data/vista/P_VISTA12_16_SA1_V1.csv")%>% 
   filter(HomeRegion_ASGS == "Melbourne GCCSA")   # Filtering to the study region
 
 
@@ -65,7 +62,7 @@ persons <- persons %>%
 
 
 # Adding coordinates to stops:
-sa1 <- read_sf("/jafshin/cloudstor/Data/ABS_Boundaries/2011/SA1_2011_AUST.shp") %>% 
+sa1 <- read_sf("./data/abs/SA1_2011_AUST.shp") %>% 
   mutate(HomeSA1=as.double(SA1_MAIN11)) %>% 
   st_transform(28355)
 
@@ -87,8 +84,6 @@ trips_sf <- trips_sf %>%
 # removing trips that are having NA as x and y:
 trips_sf <- trips_sf %>% 
   filter(!is.na(origX) & !is.na(origY) & !is.na(destX) & !is.na(destY))
-
-#st_write(trips_sf, "./trips3.sqlite")
 
 # Starting to generate MATSim pop
 
@@ -114,8 +109,7 @@ for (row_id in 1:nrow(persons)) {
     if(is.null(df)) return(NULL)
     acts<-df[[1]]
     legs<-df[[2]]
-    # acts <- changeVISTACoordianteSystem(old_acts =  acts, new_crs = 28355)
-    
+
     plan <-newXMLNode("person", attrs=c(id=row_id))
     
     plan <- addMATSimAttribsXML(this_person, plan)
