@@ -1,0 +1,42 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.tar.gz
+*.rar
+#*.zip # 
+
+.settings
+.project
+.classpath
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# class files etc.:
+/target/
+
+# exclude intellj files:
+**/.idea
+**/*.iml
+
+# ignore outputs
+**/output
+
+# macOS files
+.DS_Store
+
+# ignore copies of MATSim
+/matsim-0.*
