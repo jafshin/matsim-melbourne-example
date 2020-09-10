@@ -16,7 +16,7 @@
 	</module>
 
 	<module name="controler">
-		<param name="outputDirectory" value="./output/example" />
+		<param name="outputDirectory" value="./output/example2" />
 		<param name="firstIteration" value="0" />
 		<param name="lastIteration" value="10" />
 		<param name="mobsim" value="qsim" />
@@ -26,8 +26,8 @@
 
 	<module name="qsim">
 		<param name="mainMode" value="car" />
-		<param name="trafficDynamics" value="kinematicWaves" />
-
+		<param name = "flowCapacityFactor" value = "0.01"/>
+		<param name = "storageCapacityFactor" value = "0.01"/>
 	</module>
 
 	<module name="planCalcScore">
