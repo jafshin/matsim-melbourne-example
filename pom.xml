@@ -200,7 +200,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.matsim.codeexamples.gui.MATSimGUI</mainClass>
+                            <mainClass>io.github.matsimmelbourne.Run.RunExampleScenario</mainClass>
 
                             <!--	https://stackoverflow.com/questions/7051603/jai-vendorname-null-->
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
