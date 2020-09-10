@@ -1,4 +1,4 @@
-# matsim-melbourne-example-project
+# matsim-melbourne-example
 
 An example MATSim model for Melbourne.
 
