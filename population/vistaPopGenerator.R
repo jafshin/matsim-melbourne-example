@@ -19,7 +19,7 @@ printProgress<-function(row, total_row, char)  {
 
 # Control Variables:
 
-only_cyclists <- F
+sample_size <- 0.1
 
 # REading inputs
 trips <- read_csv("./data/vista/T_VISTA12_16_SA1_V1.csv") 
@@ -59,7 +59,11 @@ persons <- persons %>%
                                             false = if_else(MAINACT == "Full-time TAFE/Uni", true = "TAFE/Uni_STUDENT", 
                                                             false = "NOTWROKER" )))) 
 
+# Sampling persons
+library(splitstackshape)
+persons_w <- expandRows(persons, "CW_ADPERSWGT_SA3", drop = FALSE)
 
+persons_sampled <- persons_w %>% sample_n(size = (sample_size*nrow(persons_w)))
 
 # Adding coordinates to stops:
 sa1 <- read_sf("./data/abs/SA1_2011_AUST.shp") %>% 
@@ -87,19 +91,20 @@ trips_sf <- trips_sf %>%
 
 # Starting to generate MATSim pop
 
-xml_dir  <- "../outputs/outputPopulation/"
-xml_file  <- paste0(xml_dir,"VISTA_EPSG28355_200909_2230.xml")
+xml_dir  <- "./"
+xml_file  <- paste0(xml_dir,"pop",sample_size*100,"pct.xml")
 ifelse(!dir.exists(xml_dir), dir.create(xml_dir), FALSE)
+open(file(xml_file), "wt")
 
 cat("<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE population SYSTEM \"http://www.matsim.org/files/dtd/population_v6.dtd\">\n
 <population>\n",file=xml_file,append=FALSE)
 
-echo(paste0('generating MATSim cyclists (n = ', length(nrow(persons)),') with trips\n'))
+echo(paste0('generating MATSim cyclists (n = ', length(nrow(persons_sampled)),') with trips\n'))
 #row_id <- 1
-for (row_id in 1:nrow(persons)) {
+for (row_id in 1:nrow(persons_sampled)) {
   
-  this_person <- persons[row_id,]
+  this_person <- persons_sampled[row_id,]
   this_trips <- trips_sf %>% filter(PERSID == as.character(this_person$PERSID))
   
   if(nrow(this_trips) == 0){
@@ -109,7 +114,7 @@ for (row_id in 1:nrow(persons)) {
     if(is.null(df)) return(NULL)
     acts<-df[[1]]
     legs<-df[[2]]
-
+    
     plan <-newXMLNode("person", attrs=c(id=row_id))
     
     plan <- addMATSimAttribsXML(this_person, plan)
@@ -119,12 +124,13 @@ for (row_id in 1:nrow(persons)) {
         file=xml_file,append=TRUE)
     cat("\n",file=xml_file,append=TRUE)
     
-    if(row_id %%10 == 0) printProgress(row_id, nrow(persons), 'person')
+    if(row_id %%10 == 0) printProgress(row_id, nrow(persons_sampled), 'person')
   }
 }
 
 cat("</population>\n",file=xml_file,append=TRUE)
 
 cat('\n')
-echo(paste0('finished generating ',as.character(nrow(persons)),' persons\n'))
+echo(paste0('finished generating ',as.character(nrow(persons_sampled)),' persons\n'))
+close(file(xml_file))
 
