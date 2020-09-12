@@ -8,15 +8,15 @@
 	</module>
 
 	<module name="network">
-		<param name="inputNetworkFile" value="./network.xml.gz" />
+		<param name="inputNetworkFile" value="./network2.xml.gz" />
 	</module>
 
 	<module name="plans">
-		<param name="inputPlansFile" value="./population.xml.gz" />
+		<param name="inputPlansFile" value="./pop10pct.xml.gz" />
 	</module>
 
 	<module name="controler">
-		<param name="outputDirectory" value="./output/example2" />
+		<param name="outputDirectory" value="./output/example-10pct" />
 		<param name="firstIteration" value="0" />
 		<param name="lastIteration" value="10" />
 		<param name="mobsim" value="qsim" />
@@ -26,8 +26,14 @@
 
 	<module name="qsim">
 		<param name="mainMode" value="car" />
-		<param name = "flowCapacityFactor" value = "0.01"/>
-		<param name = "storageCapacityFactor" value = "0.01"/>
+		<param name = "flowCapacityFactor" value = "0.1"/>  <!-- use this with 10pct sample -->
+		<param name = "storageCapacityFactor" value = "0.1"/>  <!-- use this with 10pct sample -->
+		<!--<param name = "flowCapacityFactor" value = "0.05"/> --> <!-- use this with 5pct sample -->
+		<!--<param name = "storageCapacityFactor" value = "0.065"/> --> <!-- use this with 5pct sample -->
+		<!--<param name = "flowCapacityFactor" value = "0.01"/> --> <!-- use this with 1pct sample -->
+		<!--<param name = "storageCapacityFactor" value = "0.02"/> --> <!-- use this with 1pct sample -->
+		<param name = "startTime" value="00:00:00"/>
+		<param name = "endTime" value="30:00:00"/>
 	</module>
 
 	<module name="planCalcScore">
