@@ -8,20 +8,23 @@
 	</module>
 
 	<module name="network">
-		<param name="inputNetworkFile" value="./network2.xml.gz" />
+		<param name="inputNetworkFile" value="./network.xml.gz" />
 	</module>
 
 	<module name="plans">
-		<param name="inputPlansFile" value="./pop10pct.xml.gz" />
+		<param name="inputPlansFile" value="./pop10pct.xml.gz" /> <!-- 10% sample  -->
+		<!--<param name="inputPlansFile" value="./pop10pct-routed.xml.gz" /> --> <!-- routed 10% sample -->
+		<!--<param name="inputPlansFile" value="./pop5pct.xml.gz" /> --> <!-- 5% sample  -->
+		<!--<param name="inputPlansFile" value="./pop5pct-routed.xml.gz" /> --> <!-- routed 5% sample -->
+		<!--<param name="inputPlansFile" value="./pop1pct.xml.gz" /> -->  <!-- 1% sample -->
+		<!--<param name="inputPlansFile" value="./pop1pct-routed.xml.gz" /> --> <!-- routed 1% sample -->
 	</module>
 
 	<module name="controler">
-		<param name="outputDirectory" value="./output/example-10pct" />
+		<param name="outputDirectory" value="./output/example" />
 		<param name="firstIteration" value="0" />
 		<param name="lastIteration" value="10" />
 		<param name="mobsim" value="qsim" />
-		<param name="snapshotFormat" value="" />
-
 	</module>
 
 	<module name="qsim">
@@ -71,7 +74,6 @@
 				<param name="latestStartTime" value="09:00:00" />
 				<param name="closingTime" value="18:00:00" />
 			</parameterset>
-			
 
 			<parameterset type="activityParams" ><!-- education -->
 				<param name="activityType" value="edu" />
@@ -90,13 +92,11 @@
 				<param name="latestStartTime" value="09:00:00" />
 				<param name="closingTime" value="18:00:00" />
 			</parameterset>
-			
-		
+
 			<parameterset type="modeParams">
 				<param name="mode" value="car"/>
 				<param name="marginalUtilityOfTraveling_util_hr" value="-6.0" />
 			</parameterset>
-
 
 			<parameterset type="modeParams" >
 				<param name="constant" value="0.0" />
