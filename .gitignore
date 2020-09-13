@@ -42,6 +42,7 @@ hs_err_pid*
 /matsim-0.*
 
 # ignore downloaded inputs
+inputs.tar
 inputs/network.xml.gz
 inputs/pop10pct-routed.xml.gz
 inputs/pop10pct.xml.gz
