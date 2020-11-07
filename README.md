@@ -27,5 +27,5 @@ This will download all necessary dependencies (it might take a while the first t
 This jar-file can be executed with Java on the command line using:
 
 ```sh
-java -jar target/matsim-melbourne-example-1.0-SNAPSHOT-jar-with-dependencies.jar
+java -jar -Xmx4g -Xms4g target/matsim-melbourne-example-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```

@@ -16,7 +16,7 @@
 *.ear
 *.tar.gz
 *.rar
-#*.zip # 
+#*.zip #
 
 .settings
 .project
@@ -40,3 +40,13 @@ hs_err_pid*
 
 # ignore copies of MATSim
 /matsim-0.*
+
+# ignore downloaded inputs
+inputs.tar
+inputs/network.xml.gz
+inputs/pop10pct-routed.xml.gz
+inputs/pop10pct.xml.gz
+inputs/pop1pct-routed.xml.gz
+inputs/pop1pct.xml.gz
+inputs/pop5pct-routed.xml.gz
+inputs/pop5pct.xml.gz
