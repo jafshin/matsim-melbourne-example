@@ -23,7 +23,7 @@ useWeights <- F # set T if you want to use waits
 if(useWeights) {
   sample_size <- 0.1 # Adjust the sample size if you want to use weights
 }else{
-  sample_size <- "VISTA" 
+  sample_size <- "VISTA"
 }
 
 # VISTA Trips -------------------------------------------------------------
@@ -110,7 +110,7 @@ if(useWeights){
 
 # Generating MATSim population --------------------------------------------
 xml_dir  <- "./"
-xml_file  <- paste0(xml_dir,"pop",sample_size*100,"pct.xml")
+xml_file  <- paste0(xml_dir,"pop",sample_size,"pct.xml")
 ifelse(!dir.exists(xml_dir), dir.create(xml_dir), FALSE)
 open(file(xml_file), "wt")
 
