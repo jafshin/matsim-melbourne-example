@@ -1,9 +1,7 @@
-
 library(dplyr)
 library(sf)
 library(XML)
 library(readr)
-
 
 # Functions ---------------------------------------------------------------
 source("./functions/generateVISTAActsAndLeg.R")
@@ -20,13 +18,13 @@ printProgress<-function(row, total_row, char)  {
   if(row%%500==0) cat(paste0(char,' ', row, ' of ', total_row, '\n'))
 }
 
-
 # Control Variables -------------------------------------------------------
 useWeights <- F # set T if you want to use waits
 if(useWeights) {
   sample_size <- 0.1 # Adjust the sample size if you want to use weights
+}else{
+  sample_size <- "VISTA" 
 }
-
 
 # VISTA Trips -------------------------------------------------------------
 # Reading the data
@@ -59,9 +57,8 @@ trips <- trips %>%
   mutate(MAINMODE2 = if_else(LINKMODE == "Walking", true = "walk", 
                              false = MAINMODE2)) %>%
   mutate(MAINMODE2 = if_else(LINKMODE %in% c("Vehicle Driver", "Vehicle Passenger"), 
-                             true = "car", false = MAINMODE2)) %>%
+                             true = "car", false = MAINMODE2))
   
-
 # VISTA Persons -----------------------------------------------------------
 # Reading the inputs + removing those outside the study area
 persons <- read_csv("./data/vista/P_VISTA12_16_SA1_V1.csv")%>% 
@@ -77,7 +74,6 @@ persons <- persons %>%
                             true = "SCHOOL_STUDENT", false= MAINACT2)) %>% 
   mutate(MAINACT2 = if_else(MAINACT == "Full-time TAFE/Uni", 
                             true = "TAFE/Uni_STUDENT", false= MAINACT2))  
-
 
 # Adding the coordinates --------------------------------------------------
 # Reading SA1 boundaries
@@ -105,14 +101,12 @@ trips_sf <- trips_sf %>%
 trips_sf <- trips_sf %>% 
   filter(!is.na(origX) & !is.na(origY) & !is.na(destX) & !is.na(destY))
 
-
 # Sampling based on VISTA weights -----------------------------------------
 if(useWeights){
   library(splitstackshape)
   persons <- expandRows(persons, "CW_ADPERSWGT_SA3", drop = FALSE)
   persons <- persons %>% sample_n(size = (sample_size*nrow(persons)))
 }
-
 
 # Generating MATSim population --------------------------------------------
 xml_dir  <- "./"
